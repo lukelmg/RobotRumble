@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer with Image</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  #countdown-container {
+    position: relative;
+  }
+  #countdown, h1 {
+    font-size: 50px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    border-radius: 5px;
+    top: 400px;
+    width: 500px;
+  }
+
+  h1 {
+    top: 300px;
+  }
+
+  img { 
+    border-radius: 40px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
+
+  video {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 130%;
+    height: 130%;
+    z-index: -1;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+    <video autoplay muted loop>
+        <source src="inv2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+<div id="countdown-container">
+  <img src="image.png" alt="Image" width="600" height="600">
+  <h1>Build time ends in</h1>
+  <div id="countdown"></div>
+</div>
+
+<script>
+function updateCountdown() {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(19, 40, 0); // Set the target time to 7:40 PM
+
+  let timeDiff = target - now;
+  if (timeDiff < 0) {
+    // If the target time has already passed today, set it for tomorrow
+    target.setDate(target.getDate() + 1);
+    timeDiff = target - now;
+  }
+
+  const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+  const countdownElement = document.getElementById("countdown");
+  countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+
+  setTimeout(updateCountdown, 1000); // Update every second
+}
+
+updateCountdown(); // Initial call
+</script>
+</body>
+</html>
